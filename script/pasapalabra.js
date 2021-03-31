@@ -140,6 +140,8 @@ function recibir(){
         document.getElementById("salir").textContent = "Finalizar juego";
         clearInterval(inter);
         getName();
+        debugger
+        showParticipants(players)
         
         
 
@@ -182,6 +184,7 @@ function salir(){
         //Si tenemos el juego en marcha y queremos terminar la partida
         clearInterval(inter);
         getName();
+        showParticipants(players)
         document.getElementById("salir").textContent = "Finalizar juego";
         document.getElementById("palabra").disabled = true;
         document.getElementById("boton").disabled = true;
@@ -197,17 +200,8 @@ function salir(){
         document.getElementById("start").disabled = false;
         document.getElementById("salir").disabled = true;
         document.getElementById("salir").classList.add("opacity");
-        //Ordenamos la lista de jugadores
-        sortParticipants(players);
-        
-        //Mostramos la lista de jugadores 
-        let puntua = "<h1>Puntuaciones finales</h1>";
-
-        for(let m=0;m<players.length;m++){
-            puntua += (m+1) + " " + players[m].name + " con " + players[m].rigth + " palabras acertadas y " + players[m].wrong + " palabras incorrectas <br>";
-            
-        }
-        document.getElementById("p").innerHTML = puntua;
+        //Mostramos la clasificacion final
+        showParticipants(players)
         document.getElementById("start").textContent = "Volver a empezar el juego";
         document.getElementById("resp").textContent = "";
         document.getElementById("question").textContent = "";
@@ -216,6 +210,20 @@ function salir(){
     
     }
     
+}
+
+//Función para mostrar la clasificación de participantes
+function showParticipants(players){
+    //Ordenamos la lista de jugadores
+    sortParticipants(players);
+        
+    //Mostramos la lista de jugadores 
+    puntua = "<h1>Puntuaciones finales</h1>";
+
+    for(let m=0;m<players.length;m++){
+        puntua += (m+1) + " " + players[m].name + " con " + players[m].rigth + " palabras acertadas y " + players[m].wrong + " palabras incorrectas <br>";
+    }
+    document.getElementById("p").innerHTML = puntua;
 }
 
 //Función para ordenar los participantes por las palabras acertadas
@@ -251,6 +259,7 @@ function interval(){
             document.getElementById("start").disabled = false;
             document.getElementById("start").classList.remove("opacity");
             getName();
+            showParticipants(players)
             document.getElementById("start").textContent = "Siguiente partida";
             document.getElementById("salir").textContent = "Finalizar juego";
         }
@@ -267,6 +276,7 @@ let pendent = 0;
 let i = 0;
 let start = false;
 let flag = 0;
+let puntua;
 
 //status == 0 pregunta en primer estado
 //status == 1 pregunta acertada
